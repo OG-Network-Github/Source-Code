@@ -1,1 +1,62 @@
+let b_value = "786" //this is the value that calculator will process
+let bit_8 = [128, 64, 32, 16, 8, 4, 2, 1]; //values of 8-bit and all
+let bit_16 = [32768, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1,];
+let bit_32 = [ 2147483648, 1073741824, 536870912, 268435456, 134217728, 67108864, 33554432, 16777216, 8388608, 4194304, 2097152, 1048576, 524288, 262144, 131072, 65536, 32768,16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1];
+let binary = "";   //default value for the result var
+let pro = "Auto"   //mode of conversion ["Auto", "bit-8", "bit-16", "bit-32"]
 
+function change(element) {   //function to calculate binary
+  for (const it of element) {
+    if (it <= b_value) {
+      if (it == b_value) {
+        b_value = b_value - it;
+        binary = binary + "1";
+      } else {
+        b_value = b_value - it;
+        binary = binary + "1";
+      }
+    } else {
+      binary = binary + "0";
+    }
+  }
+}
+function b_convert(bro = "Auto") {   // function to select mode of conversion
+  if (bro == "Auto") {    //default mode
+    if (b_value >= 16777216) {
+      console.log("value is too big to handle");
+    } else if (b_value > 255 && b_value < 65536) {
+      change(bit_16);
+    } else if (b_value > 65535) {
+      change(bit_32);
+    } else {
+      change(bit_8);
+    }
+   
+  } 
+  else if (bro == "bit-8") {     //8-bit mode max limit = 255
+    if (b_value > 255) {
+      console.log("please use 16-bit or more convert this value");
+    } else {
+      change(bit_8);
+    }
+  } 
+  else if (bro == "bit-16") {   //16-bit mode max limit = 65535
+    if (b_value > 65535) {
+      console.log("please use 32-bit or more convert this value");
+    } else {
+      change(bit_16);
+    }
+  } 
+  else if (bro == "bit-32") {   //32-bit mode max limit 4294967295
+    if (b_value > 4294967295) {
+      console.log("Value is too big to be converted");
+    } else {
+      change(bit_32);
+    }
+  } 
+  return  binary
+}
+
+//Example use :
+console.log("Your answer is : " + b_convert("bit-16"))
+console.log("In 32 bits it is : " + b_convert("bit-32"))
